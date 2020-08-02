@@ -56,9 +56,9 @@
             android:id="@+id/emailET"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:ems="10"
             android:backgroundTint="#000"
-            android:inputType="text"
+            android:ems="10"
+            android:inputType="text|textEmailAddress"
             android:textColor="#000" />
 
         <TextView
@@ -74,10 +74,10 @@
             android:id="@+id/pwET"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:ems="10"
             android:backgroundTint="#000"
-            android:inputType="text"
-            android:textColor="#000"/>
+            android:ems="10"
+            android:inputType="none|textPassword"
+            android:textColor="#000" />
 
         <TextView
             android:layout_width="300dp"
@@ -92,10 +92,10 @@
             android:id="@+id/phoneET"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:ems="10"
             android:backgroundTint="#000"
-            android:inputType="date"
-            android:textColor="#000"/>
+            android:ems="10"
+            android:inputType="number|phone"
+            android:textColor="#000" />
 
         <Button
             android:id="@+id/registerButton"

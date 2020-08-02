@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -24,6 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText fullNameET,emailET,pwET,phoneET;
     FirebaseAuth fAuth;
     ProgressBar progressBar;
+
+    private FirebaseFirestore mFireStoreRef = FirebaseFirestore.getInstance();
+    private final String TAG = "REGISTER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +87,16 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this,"User Created.", Toast.LENGTH_SHORT).show();
+
+
+                            SimpleDateFormat s = new SimpleDateFormat("yyyy-mm-dd");
+                            String format = s.format(new Date());
+
+                            HashMap<String, Object> data = new HashMap<>();
+                            data.put("generated", format);
+
+                            mFireStoreRef.collection("Users").document(email).set(data);
+
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         } else {
                             Toast.makeText(RegisterActivity.this, "Error !"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
